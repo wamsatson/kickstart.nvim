@@ -125,38 +125,36 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
---
 --  To check the current status of your plugins, run
 --    :Lazy
---
---  You can press `?` in this menu for help. Use `:q` to close the window
---
---  To update plugins you can run
---    :Lazy update
---
--- NOTE: Here is where you install your plugins.
 require('lazy').setup({
 
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
+  require 'plugins.git',
+  require 'plugins.treesitter',
+  require 'plugins.which-key',
+  require 'plugins.neo-tree',
+  require 'plugins.autoformat',
+  require 'plugins.autocompletion',
+  require 'plugins.colorscheme.dracula',
+  require 'plugins.lint',
+  require 'plugins.debug',
+  require 'plugins.autopairs',
+  require 'plugins.indent-line',
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua',
     opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
     },
   },
-
-  require 'plugins.treesitter',
-  require 'plugins.which-key',
-  require 'plugins.nvim-tree',
   require 'plugins.lsp',
-  require 'plugins.autoformat',
-  require 'plugins.colorscheme.dracula',
+
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- Highlight todo, notes, etc in comments
+  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -195,7 +193,6 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
-
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
