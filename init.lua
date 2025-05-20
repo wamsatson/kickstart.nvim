@@ -130,6 +130,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
   require 'plugins.git',
+  require 'plugins.telescope',
   require 'plugins.treesitter',
   require 'plugins.which-key',
   require 'plugins.neo-tree',
